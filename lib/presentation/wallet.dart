@@ -136,7 +136,6 @@ class _WalletPageState extends State<WalletPage> {
                             .validateAddress(address: addressController.text)) {
                           setState(() => validateAddress = true);
 
-                          // action
                           await transactionAction();
                         } else {
                           setState(() => validateAddress = false);
@@ -172,7 +171,6 @@ class _WalletPageState extends State<WalletPage> {
   Future<void> transactionAction() async {
     switch (state) {
       case TransactionState.idle:
-        // Send transaction
         setState(() => state = TransactionState.sending);
 
         Future.delayed(Duration.zero, () => widget.connector.openWalletApp());
@@ -190,7 +188,6 @@ class _WalletPageState extends State<WalletPage> {
       case TransactionState.sending:
       case TransactionState.successful:
       case TransactionState.failed:
-        // Do nothing
         break;
     }
   }
