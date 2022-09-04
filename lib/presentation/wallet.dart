@@ -11,12 +11,13 @@ enum TransactionState {
 }
 
 class WalletPage extends StatefulWidget {
-  const WalletPage({
+   WalletPage({
     required this.connector,
     Key? key,
   }) : super(key: key);
 
   final WalletConnector connector;
+
 
   @override
   State<WalletPage> createState() => _WalletPageState();
@@ -29,7 +30,7 @@ class _WalletPageState extends State<WalletPage> {
   bool validateAddress = true;
   bool validateAmount = true;
   TransactionState state = TransactionState.idle;
-
+  late String address = widget.connector.address;
   @override
   void dispose() {
     addressController.dispose();
@@ -61,7 +62,7 @@ class _WalletPageState extends State<WalletPage> {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
-                Text(widget.connector.address),
+                Text(address),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: Text(
@@ -136,7 +137,7 @@ class _WalletPageState extends State<WalletPage> {
                             .validateAddress(address: addressController.text)) {
                           setState(() => validateAddress = true);
 
-                          await transactionAction();
+                          await transactionAction(address);
                         } else {
                           setState(() => validateAddress = false);
                         }
@@ -168,7 +169,7 @@ class _WalletPageState extends State<WalletPage> {
     }
   }
 
-  Future<void> transactionAction() async {
+  Future<void> transactionAction(String address) async {
     switch (state) {
       case TransactionState.idle:
         setState(() => state = TransactionState.sending);
@@ -182,6 +183,7 @@ class _WalletPageState extends State<WalletPage> {
         if (hash != null) {
           setState(() => state = TransactionState.successful);
         } else {
+          address = address;
           setState(() => state = TransactionState.failed);
         }
         break;
