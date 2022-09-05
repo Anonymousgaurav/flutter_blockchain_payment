@@ -41,6 +41,10 @@ class WalletConnectEthereumCredentials extends CustomTransactionSender {
 }
 
 class EthereumConnector implements WalletConnector {
+
+  late final WalletConnectQrCodeModal _connector;
+  late final EthereumWalletConnectProvider _provider;
+
   EthereumConnector() {
     _connector = WalletConnectQrCodeModal(
       connector: WalletConnect(
@@ -140,8 +144,6 @@ class EthereumConnector implements WalletConnector {
   @override
   String get coinName => 'Eth';
 
-  late final WalletConnectQrCodeModal _connector;
-  late final EthereumWalletConnectProvider _provider;
   final _ethereum = Web3Client(
       'https://mainnet.infura.io/v3/fd88f3e465e14e6198863596706440ba',
       Client());
