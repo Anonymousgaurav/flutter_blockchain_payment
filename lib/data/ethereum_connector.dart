@@ -87,7 +87,7 @@ class EthereumConnector implements WalletConnector {
   }) async {
     final sender =
         EthereumAddress.fromHex(_connector.connector.session.accounts[0]);
-    final recipient = EthereumAddress.fromHex(address);
+    final recipient = EthereumAddress.fromHex(recipientAddress);
 
     final etherAmount = EtherAmount.fromUnitAndValue(
         EtherUnit.szabo, (amount * 1000 * 1000).toInt());
